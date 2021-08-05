@@ -34,12 +34,33 @@ class _HomeState extends State<Home> {
 
   _listarUsuarios() async {
     Database db = await _recuperarBancoDados();
+
+    // String sql = "SELECT * FROM usuarios WHERE idade = 35 ";
+    // String sql = "SELECT * FROM usuarios WHERE idade = 35 OR idade = 36 ";
+    // String sql = "SELECT * FROM usuarios WHERE idade BETWEEN 36 AND 37 ";
+    // String sql = "SELECT * FROM usuarios WHERE idade IN (35,36) ";
+    // String sql = "SELECT * FROM usuarios WHERE nome = 'Alison' ";
+    // String sql = "SELECT * FROM usuarios WHERE nome LIKE 'Ali%' ";
+    // String sql = "SELECT * FROM usuarios WHERE 1=1 ORDER BY UPPER(nome) ASC ";
+    // String sql = "SELECT * FROM usuarios WHERE 1=1 ORDER BY UPPER(nome) DESC ";
+    String sql = "SELECT * FROM usuarios ";
+    List usuarios = await db.rawQuery(sql);
+
+    for (var usuario in usuarios) {
+      print("item id: " +
+          usuario["id"].toString() +
+          " nome: " +
+          usuario["nome"] +
+          " idade: " +
+          usuario["idade"].toString());
+    }
+    // print("usuarios: " + usuarios.toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    _salvar();
-
+    //_salvar();
+    _listarUsuarios();
     return Scaffold(
       appBar: AppBar(
         title: Text('Banco de dados'),
